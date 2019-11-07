@@ -22,6 +22,7 @@ def home_page(request, *args):
 
 
 def signup(request):
+    error = False
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -31,15 +32,18 @@ def signup(request):
             raw_password = data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('')
+            error = True
         else:
-            return render(request, 'sign_up.html', {'form': form, 'error': True})
+            error = False
+            return render(request, 'sign_up.html', {'form': form, 'error': error})
     else:
+        error = False
         form = SignUpForm()
-    return render(request, 'sign_up.html', {'form': form})
+    return render(request, 'sign_up.html', {'form': form, 'error': error})
 
 
 def login_view(request):
+    error = bool
     if request.method == 'POST':
         form = LogInForm(request.POST)
         if form.is_valid():
@@ -47,10 +51,12 @@ def login_view(request):
             password = request.POST['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
+                error = True
                 login(request, user)
                 return home_page(request, request.user.is_authenticated)
             else:
-                return render(request, '')
+                return render(request, 'LogIn.html', {'error': True})
     else:
+        error = False
         form = SignUpForm()
-    return render(request, 'sign_up.html', {'form': form})
+    return render(request, 'LogIn.html', {'form': form, 'error': error})

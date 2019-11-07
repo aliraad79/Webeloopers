@@ -1,12 +1,14 @@
 {% extends 'Base.html' %}
 {% block login %}
+    <br><br>
     <form id=”login_form”>
         <label>
-            <input name=”username”>
+            username : <input name=”username”><br><br>
         </label>
         <label>
-            <input name=”password”>
+            password : <input name=”password”><br><br>
         </label>
+        <button name=”submit">submit</button>
     </form>
     <br>
     {% if error %}
