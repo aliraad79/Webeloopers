@@ -20,12 +20,14 @@ def home_page(request, *args):
 def signup(request):
     username_error = False
     pass_error = False
-    if request.method == 'GET':
+    if request.method == 'POST':
         form = SignUpForm(request.POST)
+        print(request.POST['”user_name”'])
+        data = form.cleaned_data
+        username = data.get('user_name')
+        print(username)
         if form.is_valid():
-            data = form.cleaned_data
             form.save()
-            username = data.get('username')
             raw_password = data.get('password1')
             repeated_password = data.get('password2')
             for i in User.objects.all():

@@ -1,18 +1,18 @@
 {% extends 'Base.html' %}
 {% block login %}
     <br><br>
-    <form id=”login_form” action=".">
+    <form id="login_form" action=".">
         <label>
-            username : <input name=”username”><br><br>
+            username : <input name="username"><br><br>
         </label>
         <label>
-            password : <input name=”password”><br><br>
+            password : <input name="password"><br><br>
         </label>
-        <button name=”submit">submit</button>
+        <button name="submit">submit</button>
     </form>
     <br>
     {% if error %}
-        <div id=”error”>
+        <div id="error">
             Please Fill the form correctly
         </div>
     {% endif %}

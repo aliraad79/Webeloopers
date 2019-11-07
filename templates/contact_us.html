@@ -1,20 +1,20 @@
 {% extends 'Base.html' %}
 {% block contact_us %}
-    <form id=”contact_us_form” action="" method="post">
+    <form id="contact_us_form" action="" method="post">
     {% csrf_token %}
         <br><br>
         <label>
-            Title : <input name=”title”>
+            Title : <input name="title">
         </label>
         <br><br>
         <label>
-            Email : <input name=”email”>
+            Email : <input name="email">
         </label>
         <br><br>
         <label>
-            Text : <textarea name=“text”>
+            Text : <textarea name=“text">
         </textarea>
         </label>
-        <button name=”submit">submit</button>
+        <button name="submit">submit</button>
     </form>
 {% endblock %}

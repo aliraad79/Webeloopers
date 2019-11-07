@@ -4,37 +4,39 @@
 {% endblock %}
 {% block sign_up %}
     <br>
+
     {% if username_error %}
-        <div id=”errors”>
+        <div id="errors">
             نام کاربری شما در سیستم موجود است
         </div>
     {% endif %}
     {% if pass_error %}
-        <div id=”errors”>
+        <div id="errors">
             گذرواژه و تکرار گذرواژه یکسان نیستند
         </div>
     {% endif %}
-    <form id=”register_form” action=".">
+    <form id="register_form" method="post">
+        {% csrf_token %}
         <label>
-            first name : <input name=”first_name” placeholder="first name"><br>
+            first name : <input name="first_name" placeholder="first name"><br>
         </label>
         <label>
-            last name : <input name=”last_name” placeholder="last name"><br>
+            last name : <input name="last_name" placeholder="last name"><br>
         </label>
         <label>
-            user name : <input name=”username” placeholder="user name"><br>
+            user name : <input name="user_name" placeholder="user name"><br>
         </label>
         <label>
-            email : <input name=”email” placeholder="email"><br>
+            email : <input name="email" placeholder="email"><br>
         </label>
         <label>
-            password : <input name=”password1” placeholder="password"><br>
+            password : <input name="password1" placeholder="password"><br>
         </label>
         <label>
-            enter password  again : <input name=”password2” placeholder="password"><br>
+            enter password  again : <input name="password2" placeholder="password"><br>
         </label>
 
-        <button name=”submit">submit
+        <button name="submit">submit
         </button>
     </form>
 {% endblock %}
