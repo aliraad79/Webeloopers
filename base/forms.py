@@ -33,3 +33,12 @@ class ContactUSForm(forms.Form):
     class Meta:
         model = User
         fields = '__all__'
+
+
+class EditProfileForm(forms.Form):
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name',)

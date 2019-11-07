@@ -1,0 +1,9 @@
+{% extends 'Base.html' %}
+{% block blocky %}
+    <form id="setting_form" action="" method="post">
+        {% csrf_token %}
+        <input name="first_name" placeholder="new first name">
+        <input name="last_name" placeholder="new last name">
+        <button name="submit" type="submit">Make Changes</button>
+    </form>
+{% endblock %}
