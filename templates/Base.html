@@ -7,9 +7,11 @@
 
 
 <div id="navbar">
-    {% if  not is_login %}
+    {% if  not request.user.is_authenticated %}
         <a id="login" href="/login/">login</a>
         <a id="register" href="/sign_up/">Register</a>
+    {% else %}
+        <a id="logout" href="/logOut/">Log out</a>
     {% endif %}
     <a id="homepage" href="/">Home Page</a>
     <!--<a id="contact_us" href="/contact_us/">Contact US</a>-->
