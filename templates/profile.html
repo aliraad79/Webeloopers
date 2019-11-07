@@ -1,0 +1,6 @@
+{% extends Base.html %}
+{% block blocky %}
+    <span id=”text_first_name”>{{ request.user.first_name }}</span>
+    <span id=”text_last_name”>{{ request.user.last_name }}</span>
+    <span id=”text_user_name”>{{ request.user.username }}</span>
+{% endblock %}

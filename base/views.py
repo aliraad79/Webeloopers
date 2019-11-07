@@ -1,4 +1,5 @@
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import HttpResponse
@@ -80,3 +81,8 @@ def contact_us_view(request):
 def logout_view(request):
     logout(request)
     return home_page(request)
+
+
+@login_required
+def profile_view(request):
+    return render(request, 'profile.html')
