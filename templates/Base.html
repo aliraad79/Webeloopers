@@ -9,9 +9,10 @@
 <div id=”navbar”>
     <a id=”homepage” href="/">Home Page</a>
     {% if  not is_login %}
-        <a id=”register” href="sign_up/">Register</a>
-        <a id=”login” href="login/">login</a>
+        <a id=”register” href="/sign_up/">Register</a>
+        <a id=”login” href="/login/">login</a>
     {% endif %}
+    <a id="contact_us" href="/contact_us/">Contact US</a>
 
 
 </div>
@@ -20,6 +21,10 @@
 {% block sign_up %}
 {% endblock %}
 {% block login %}
+{% endblock %}
+{% block contact_us %}
+{% endblock %}
+{% block blocky %}
 {% endblock %}
 </body>
 </html>

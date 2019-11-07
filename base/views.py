@@ -1,18 +1,14 @@
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.urls import reverse
 
-from base.forms import SignUpForm, LogInForm
+from base.forms import SignUpForm, LogInForm, ContactUSForm
 
 
 # Create your views here.
 
 def test(request):
     return render(request, 'Base.html', {'is_login': 1})
-
-
-def signup_dup(request):
-    return redirect('/sign_up')
 
 
 def home_page(request, *args):
@@ -22,7 +18,8 @@ def home_page(request, *args):
 
 
 def signup(request):
-    error = False
+    username_error = False
+    pass_error = False
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -30,16 +27,18 @@ def signup(request):
             form.save()
             username = data.get('username')
             raw_password = data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            error = True
-        else:
-            error = False
-            return render(request, 'sign_up.html', {'form': form, 'error': error})
+            repeated_password = data.get('password2')
+            for i in User.objects.all():
+                if i.username == username:
+                    username_error = True
+            if raw_password != repeated_password:
+                pass_error = True
+            if not pass_error and not username_error:
+                user = authenticate(username=username, password=raw_password)
+                login(request, user)
     else:
-        error = False
         form = SignUpForm()
-    return render(request, 'sign_up.html', {'form': form, 'error': error})
+    return render(request, 'sign_up.html', {'form': form, 'username_error': username_error, 'pass_error': pass_error})
 
 
 def login_view(request):
@@ -51,12 +50,16 @@ def login_view(request):
             password = request.POST['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
-                error = True
                 login(request, user)
                 return home_page(request, request.user.is_authenticated)
             else:
-                return render(request, 'LogIn.html', {'error': True})
+                error = True
     else:
         error = False
         form = SignUpForm()
     return render(request, 'LogIn.html', {'form': form, 'error': error})
+
+
+def contact_us_view(request):
+    form = ContactUSForm(request.POST)
+    return render(request, 'contact_us.html', {'form': form})

@@ -23,3 +23,9 @@ class LogInForm(UserCreationForm):
     class Meta:
         model = User
         fields = '__all__'
+
+
+class ContactUSForm(UserCreationForm):
+    title = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
+    text = forms.CharField(required=True)
