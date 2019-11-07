@@ -22,7 +22,6 @@ def signup(request):
     pass_error = False
     if request.method == 'POST':
         form = SignUpForm(request.POST)
-        print(request.POST['”user_name”'])
         data = form.cleaned_data
         username = data.get('user_name')
         print(username)
