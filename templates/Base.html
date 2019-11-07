@@ -1,20 +1,25 @@
 <html>
-<head></head>
+<head>
+    <title>{% block title %} {% endblock %}</title>
+
+</head>
 <body>
 
 
 <div id=”navbar”>
-    {% if url %}
-
+    <a id=”homepage” href="/">Home Page</a>
+    {% if  not is_login %}
+        <a id=”register” href="sign_up/">Register</a>
+        <a id=”login” >login</a>
     {% endif %}
-    <a id=”homepage” href="home/">Home Page</a>
-    <a id=”login”>login</a>
-    <a id=”register”>Register</a>
 
 
 </div>
 {% block welcome %}
 {% endblock %}
-
+{% block sign_up %}
+{% endblock %}
+{% block login %}
+{% endblock %}
 </body>
 </html>

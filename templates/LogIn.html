@@ -1,0 +1,17 @@
+{% extends 'Base.html' %}
+{% block login %}
+    <form id=”login_form”>
+        <label>
+            <input name=”username”>
+        </label>
+        <label>
+            <input name=”password”>
+        </label>
+    </form>
+    <br>
+    {% if error %}
+        <div id=”error”>
+            Please Fill the form correctly
+        </div>
+    {% endif %}
+{% endblock %}

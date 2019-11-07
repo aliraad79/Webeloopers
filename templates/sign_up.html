@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}
+    sign up
+{% endblock %}
+{% block sign_up %}
+    <br>
+    {% if error %}
+        Please Fill Form correctly
+    {% endif %}
+    <form id=”register_form”>
+        <label>
+            first name : <input name=”first_name” placeholder="first name"><br>
+        </label>
+        <label>
+            last name : <input name=”last_name” placeholder="last name"><br>
+        </label>
+        <label>
+            user name : <input name=”username” placeholder="user name"><br>
+        </label>
+        <label>
+            email : <input name=”email” placeholder="email"><br>
+        </label>
+        <label>
+            password : <input name=”password1” placeholder="password"><br>
+        </label>
+        <label>
+            enter password  again : <input name=”password2” placeholder="password"><br>
+        </label>
+
+        <button name=”submit">submit
+        </button>
+    </form>
+{% endblock %}
