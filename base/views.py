@@ -43,7 +43,7 @@ def signup(request):
 
 def login_view(request):
     error = bool
-    if request.method == 'GET':
+    if request.method == 'POST':
         form = LogInForm(request.POST)
         username = request.POST['username']
         password = request.POST['password']
@@ -60,7 +60,6 @@ def login_view(request):
 
 
 def contact_us_view(request):
-    print('mamad')
     if request.method == 'GET':
         form = LogInForm(request.POST)
         return render(request, 'succes.html', {'form': form})
