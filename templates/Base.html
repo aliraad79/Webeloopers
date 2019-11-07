@@ -4,14 +4,17 @@
 
 
 <div id=”navbar”>
-    <a id=”login”>
-        <a id=”register”>
-            <a id=”homepage” href=”/”/>
-            </a>
-        </a>
-    </a>
-</div>
+    {% if url %}
 
+    {% endif %}
+    <a id=”homepage” href="home/">Home Page</a>
+    <a id=”login”>login</a>
+    <a id=”register”>Register</a>
+
+
+</div>
+{% block welcome %}
+{% endblock %}
 
 </body>
 </html>
