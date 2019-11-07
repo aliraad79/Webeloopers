@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 
-class SignUpForm(UserCreationForm):
+class SignUpForm(forms.Form):
     first_name = forms.CharField(max_length=30, required=False)
     last_name = forms.CharField(max_length=30, required=False)
     user_name = forms.CharField(max_length=30, required=True)
@@ -16,7 +16,7 @@ class SignUpForm(UserCreationForm):
         fields = '__all__'
 
 
-class LogInForm(UserCreationForm):
+class LogInForm(forms.Form):
     user_name = forms.CharField(max_length=30, required=True)
     password1 = forms.CharField(max_length=40, required=True)
 
@@ -29,3 +29,7 @@ class ContactUSForm(UserCreationForm):
     title = forms.CharField(required=True)
     email = forms.EmailField(required=True)
     text = forms.CharField(required=True)
+
+    class Meta:
+        model = User
+        fields = '__all__'

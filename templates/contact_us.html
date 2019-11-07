@@ -1,6 +1,7 @@
 {% extends 'Base.html' %}
 {% block contact_us %}
-    <form id=”contact_us_form” action="">
+    <form id=”contact_us_form” action="" method="post">
+    {% csrf_token %}
         <br><br>
         <label>
             Title : <input name=”title”>

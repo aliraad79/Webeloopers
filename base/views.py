@@ -60,9 +60,11 @@ def login_view(request):
 
 
 def contact_us_view(request):
-    if request.method == 'GET':
-        form = LogInForm(request.POST)
-        return render(request, 'succes.html', {'form': form})
+    if request.method == 'POST':
+        form = ContactUSForm(request.POST)
+        print(form)
+        if form.is_valid():
+            return render(request, 'succes.html', {'form': form})
     else:
-        form = LogInForm()
-        return render(request, 'contact_us.html', {'form': form})
+        form = ContactUSForm()
+    return render(request, 'contact_us.html', {'form': form})
