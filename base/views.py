@@ -22,11 +22,10 @@ def signup(request):
     pass_error = False
     if request.method == 'POST':
         form = SignUpForm(request.POST)
-        data = form.cleaned_data
-        username = data.get('user_name')
-        print(username)
         if form.is_valid():
+            data = form.cleaned_data
             form.save()
+            username = data.get('username')
             raw_password = data.get('password1')
             repeated_password = data.get('password2')
             for i in User.objects.all():

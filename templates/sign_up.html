@@ -15,28 +15,16 @@
             گذرواژه و تکرار گذرواژه یکسان نیستند
         </div>
     {% endif %}
-    <form id="register_form" method="post">
+    <form id="register_form" method="post" action="{% url 'signup' %}">
         {% csrf_token %}
-        <label>
-            first name : <input name="first_name" placeholder="first name"><br>
-        </label>
-        <label>
-            last name : <input name="last_name" placeholder="last name"><br>
-        </label>
-        <label>
-            user name : <input name="user_name" placeholder="user name"><br>
-        </label>
-        <label>
-            email : <input name="email" placeholder="email"><br>
-        </label>
-        <label>
-            password : <input name="password1" placeholder="password"><br>
-        </label>
-        <label>
-            enter password  again : <input name="password2" placeholder="password"><br>
-        </label>
+        <input name="first_name" placeholder="first name">
+        <input name="last_name" placeholder="last name">
+        <input name="username" placeholder="user name">
+        <input name="email" placeholder="email">
+        <input name="password1" placeholder="password">
+        <input name="password2" placeholder="password">
 
-        <button name="submit">submit
+        <button name="submit" type="submit">submit
         </button>
     </form>
 {% endblock %}
