@@ -61,5 +61,13 @@ def login_view(request):
 
 
 def contact_us_view(request):
-    form = ContactUSForm(request.POST)
+    print('mamad')
+    if request.method == 'POST':
+        form = LogInForm(request.POST)
+        print('mamad 1')
+        if form.is_valid():
+            print('mamad2')
+            return render(request, 'succes.html', {'form': form})
+    else:
+        form = LogInForm()
     return render(request, 'contact_us.html', {'form': form})
