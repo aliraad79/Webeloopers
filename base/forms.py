@@ -28,7 +28,7 @@ class LogInForm(forms.Form):
 class ContactUSForm(forms.Form):
     title = forms.CharField(required=True)
     email = forms.EmailField(required=True)
-    text = forms.CharField(required=True)
+    text = forms.CharField(widget=forms.Textarea(), min_length=10, max_length=250)
 
     class Meta:
         model = User

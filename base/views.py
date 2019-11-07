@@ -1,12 +1,13 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from base.forms import SignUpForm, LogInForm, ContactUSForm
 
-
 # Create your views here.
+from webelopers import settings
 
 
 def home_page(request):
@@ -61,8 +62,15 @@ def login_view(request):
 def contact_us_view(request):
     if request.method == 'POST':
         form = ContactUSForm(request.POST)
-        print(form)
         if form.is_valid():
+            data = form.cleaned_data
+            send_mail(
+                str(data.get('title')) + str('\n') + str(data.get('email')),
+                data.get('text'),
+                settings.EMAIL_HOST_USER,
+                ['webe19lopers@gmail.com'],
+                fail_silently=False,
+            )
             return render(request, 'succes.html', {'form': form})
     else:
         form = ContactUSForm()
