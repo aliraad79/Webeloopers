@@ -20,7 +20,7 @@ def home_page(request, *args):
 def signup(request):
     username_error = False
     pass_error = False
-    if request.method == 'POST':
+    if request.method == 'GET':
         form = SignUpForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
@@ -43,17 +43,16 @@ def signup(request):
 
 def login_view(request):
     error = bool
-    if request.method == 'POST':
+    if request.method == 'GET':
         form = LogInForm(request.POST)
-        if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return home_page(request, request.user.is_authenticated)
-            else:
-                error = True
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return home_page(request, request.user.is_authenticated)
+        else:
+            error = True
     else:
         error = False
         form = SignUpForm()
@@ -62,12 +61,9 @@ def login_view(request):
 
 def contact_us_view(request):
     print('mamad')
-    if request.method == 'POST':
+    if request.method == 'GET':
         form = LogInForm(request.POST)
-        print('mamad 1')
-        if form.is_valid():
-            print('mamad2')
-            return render(request, 'succes.html', {'form': form})
+        return render(request, 'succes.html', {'form': form})
     else:
         form = LogInForm()
-    return render(request, 'contact_us.html', {'form': form})
+        return render(request, 'contact_us.html', {'form': form})
