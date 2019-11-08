@@ -126,6 +126,21 @@ def edit_profile_view(request):
 def all_courses_view(request):
     data = None
     if request.method == "POST":
+        depart = request.POST.get('department') == 'department'
+        teacher = request.POST.get('teacher') == 'teacher'
+        course = request.POST.get('course') == 'course'
         query = request.POST["search_query"]
-        data = Course.objects.filter(department=query)
+        if not depart and not course and not teacher:
+            data = Course.objects.filter(department=query)
+        else:
+            data1 = []
+            data2 = []
+            data3 = []
+            if depart:
+                data1 = Course.objects.filter(department=query)
+            if teacher:
+                data2 = Course.objects.filter(teacher=query)
+            if course:
+                data3 = Course.objects.filter(course=course)
+
     return render(request, 'all_courses.html', {'courses': data})
