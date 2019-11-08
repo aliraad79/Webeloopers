@@ -5,7 +5,7 @@ from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-from base.forms import SignUpForm, LogInForm, ContactUSForm
+from base.forms import SignUpForm, LogInForm, ContactUSForm, MakeCourseForm
 
 # Create your views here.
 from webelopers import settings
@@ -86,6 +86,23 @@ def logout_view(request):
 @login_required
 def profile_view(request):
     return render(request, 'profile.html')
+
+
+@login_required
+def panel_view(request):
+    return render(request, 'panel.html')
+
+
+# todo
+def make_new_course_view(request):
+    if request.method == 'POST':
+        form = MakeCourseForm(request.POST)
+        print(form.errors.as_data())
+        if form.is_valid():
+            form.save()
+    else:
+        form = MakeCourseForm()
+    return render(request, 'make_new_course.html', {'form': form})
 
 
 def edit_profile_view(request):

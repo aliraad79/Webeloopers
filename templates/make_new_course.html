@@ -1,0 +1,29 @@
+{% extends 'Base.html' %}
+{% block blocky %}
+<form id="make_course" action="" method="post" class="post-form">
+    {% csrf_token %}
+    {{form}}
+<!--    <input name=”department” placeholder="department">-->
+<!--    <input name=”name” placeholder="name">-->
+<!--    <input name=”course_number” placeholder="course number">-->
+<!--    <input name=”group_number” placeholder="group number">-->
+<!--    <input name=”teacher” placeholder="teacher">-->
+<!--    <input name=”start_time” placeholder="start time">-->
+<!--    <input name=”end_time” placeholder="end time">-->
+<!--    <select name=”first_day”>-->
+<!--        <option value=”0”>saturday</option>-->
+<!--        <option value=”1”>sunday</option>-->
+<!--        <option value=”2”>monday</option>-->
+<!--        <option value=”3”>tuesday</option>-->
+<!--        <option value=”4”>wednesday</option>-->
+<!--    </select>-->
+<!--    <select name=”second_day”>-->
+<!--        <option value=”0”>saturday</option>-->
+<!--        <option value=”1”>sunday</option>-->
+<!--        <option value=”2”>monday</option>-->
+<!--        <option value=”3”>tuesday</option>-->
+<!--        <option value=”4”>wednesday</option>-->
+<!--    </select>-->
+    <button name="submit" type="submit">make course</button>
+</form>
+{% endblock %}
