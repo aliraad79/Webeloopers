@@ -150,9 +150,9 @@ def all_courses_view(request):
                 data3 = Course.objects.filter(name=query)
             data = (data1 | data2 | data3).distinct()
     alldata = Course.objects.all()
-    return render(request, 'all_courses.html', {'courses': data, 'alldata':alldata})
+    return render(request, 'all_courses.html', {'courses': data, 'alldata': alldata})
 
 
 def choose_course_view(request):
     print(request.GET.get('num', ''))
-    return render(request, 'all_courses.html')
+    return redirect("/all_courses/")
