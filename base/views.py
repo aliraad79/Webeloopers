@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from base.forms import SignUpForm, LogInForm, ContactUSForm, MakeCourseForm
+from base.models import Course
 
 # Create your views here.
 from webelopers import settings
@@ -118,3 +119,8 @@ def edit_profile_view(request):
             request.user.last_name = last_name
         return profile_view(request)
     return render(request, 'edit_profile.html')
+
+
+def all_courses_view(request):
+    courses = Course.objects.all()
+    return render(request, 'all_courses.html', {'courses': courses})
