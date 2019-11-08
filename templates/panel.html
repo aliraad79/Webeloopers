@@ -1,7 +1,8 @@
 {% extends 'Base.html' %}
 {% block blocky %}
-
+{% if request.user.is_superuser %}
 <a id="make_new_course" href="/make_new_course/">make new course</a>
+{% endif %}
 <br>
 <a id="courses" href="/all_courses/">all courses</a>
 
