@@ -12,6 +12,7 @@ class Course(models.Model):
     teacher = models.CharField(max_length=30)
     start_time = models.TimeField(max_length=30)
     end_time = models.TimeField(max_length=30)
+    exam_date = models.TimeField(max_length=30)
     CHOICES = (('0', 'saturday'), ('1', 'sunday'), ('2', 'monday'), ('3', 'tuesday'), ('4', 'wednesday'))
     first_day = models.CharField(choices=CHOICES, max_length=30)
     second_day = models.CharField(choices=CHOICES, max_length=30, blank=True)
