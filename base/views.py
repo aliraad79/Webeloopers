@@ -1,5 +1,7 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
 from django.core.mail import send_mail
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
@@ -23,7 +25,7 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         try:
-            for i in OurUser.objects.all():
+            for i in User.objects.all():
                 if i.username == request.POST['username']:
                     username_error = True
             if request.POST['password1'] != request.POST['password2']:
@@ -31,12 +33,14 @@ def signup(request):
         except:
             pass
         if form.is_valid():
+            form.save()
             data = form.cleaned_data
             form.save()
             usercourse = UserCourse(user_name=request.POST['username'], course_nums_json=json.dumps([]))
             usercourse.save()
             if not pass_error and not username_error:
-                user = authenticate(username=data.get('username'), password=data.get('password1'))
+                user = authenticate(request, username=data.get('username'), password=data.get('password1'))
+                OurUser(user, None).save()
                 login(request, user)
     else:
         form = SignUpForm()
@@ -60,7 +64,7 @@ def login_view(request):
                 wrong_info = True
     else:
         error = False
-        form = SignUpForm()
+        form = LogInForm()
     return render(request, 'LogIn.html', {'form': form, 'error': error, 'wrong_info': wrong_info})
 
 
@@ -89,6 +93,19 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
+    if request.method == "POST":
+        for i in OurUser.objects.all():
+            if i.user == request.user:
+                myUser = i
+        print(request.FILES, myUser.user)
+        if request.method == 'POST' and request.FILES[myUser.image]:
+            myfile = request.FILES[request.POST]
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
+            return render(request, 'profile.html', {
+                'uploaded_file_url': uploaded_file_url
+            })
     return render(request, 'profile.html')
 
 
@@ -110,22 +127,23 @@ def make_new_course_view(request):
 
 def edit_profile_view(request):
     if request.method == 'POST':
+        print(request)
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         image = request.POST['image']
-        user = ''
-        for i in OurUser.objects.all():
+        print(request.POST['image'])
+        for i in User.objects.all():
             if i == request.user:
-                user = i
+                if first_name != '':
+                    i.first_name = first_name
+                if last_name != '':
+                    i.last_name = last_name
+                i.save()
                 break
-        if first_name != '':
-            user.first_name = first_name
-        if last_name != '':
-            user.last_name = last_name
-        if image:
-            user.image = image
+        for i in OurUser.objects.all():
+            if i.user == request.user:
+                i.image = image
 
-        user.save()
         return render(request, 'profile.html')
     return render(request, 'edit_profile.html')
 

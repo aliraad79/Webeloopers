@@ -23,7 +23,7 @@ class LogInForm(forms.Form):
 
     class Meta:
         model = User
-        fields = ('username', 'password',)
+        fields = ('username', 'password1')
 
 
 class ContactUSForm(forms.Form):

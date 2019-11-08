@@ -17,11 +17,17 @@ class Course(models.Model):
     second_day = models.CharField(choices=CHOICES, max_length=30, blank=True)
 
 
+class OurUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(blank=True, upload_to='images/')
+
+    def __init__(self, user, image=None):
+        super(OurUser, self).__init__()
+        self.user = user
+        self.image = image
+
+
 class UserCourse(models.Model):
     user_name = models.CharField(max_length=30)
     course_nums_json = models.CharField(max_length=100)
     image = models.ImageField(upload_to='image/')
-
-
-class OurUser(User):
-    image = models.FileField()
