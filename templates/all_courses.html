@@ -1,7 +1,20 @@
 {% extends 'Base.html' %}
 {% block blocky %}
 
-<div id="all_courses">
+<form id="search_form" action="" method="POST">
+    {% csrf_token %}
+    <input name="search_query">
+    department
+    <input name="department" type="checkbox" value="department">
+    teacher
+    <input name="teacher" type="checkbox" value="teacher">
+    course
+    <input name="course" type="checkbox" value="course">
+    <button name="submit" type="submit">search</button>
+    <a class="add" href="/choose_course/?num=mohsen">add</a>
+</form>
+<br>
+<div id="search_result">
     {% for course in courses %}
     <div class="{{course.course_number}}_{{course.group_number}}">
         <h4>{{course.name}}</h4>
@@ -13,13 +26,32 @@
     <br>
     {% endfor %}
 </div>
-<form id="search_form" action="" method="POST">
-    {% csrf_token %}
-    <input name="search_query">
-    <input name="department" type="checkbox" value="department">
-    <input name="teacher" type="checkbox" value="teacher">
-    <input name="course" type="checkbox" value="course">
-    <button name="submit" type="submit">search</button>
-    <a class="add" href="/choose_course/?num={{course.course_number}}">add</a>
-</form>
+<br>
+<div id="all_courses">
+    all courses
+    {% for course in alldata %}
+    <div class="{{course.course_number}}_{{course.group_number}}">
+        <h4>{{course.name}}</h4>
+        <div>{{course.department}}</div>
+        <div>{{course.get_first_day_display}} {{course.get_second_day_display}}</div>
+        <div>{{course.start_time|date:'H:i'}} {{course.end_time|date:'H:i'}}</div>
+        <div>{{course.teacher}}</div>
+    </div>
+    <br>
+    {% endfor %}
+</div>
+<div id="my_course">
+    my courses
+    {% for course in None %}
+    <div class="{{course.course_number}}_{{course.group_number}}">
+        <h4>{{course.name}}</h4>
+        <div>{{course.department}}</div>
+        <div>{{course.get_first_day_display}} {{course.get_second_day_display}}</div>
+        <div>{{course.start_time|date:'H:i'}} {{course.end_time|date:'H:i'}}</div>
+        <div>{{course.teacher}}</div>
+    </div>
+    <br>
+    {% endfor %}
+</div>
+
 {% endblock %}
