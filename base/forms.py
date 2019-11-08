@@ -50,7 +50,7 @@ class MakeCourseForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["start_time"].input_formats = ["%H:%M"]
         self.fields["end_time"].input_formats = ["%H:%M"]
-        self.fields["exam_date"].input_formats = ["%YYYY-%MM-%DD"]
+        self.fields["exam_date"].input_formats = ["%Y-%m-%d"]
 
     class Meta:
         model = Course
