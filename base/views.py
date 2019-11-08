@@ -179,17 +179,15 @@ def choose_course_view(request):
     if course_num not in courses:
         courses.append(course_num)
     courses = json.dumps(courses)
-    print(courses)
     user_course.course_nums_json = courses
     user_course.save()
-    print(user_course)
 
     mycourses = Course.objects.none()
     courses = json.loads(courses)
     for coursenum in courses:
         mycourses |= Course.objects.filter(course_number=coursenum)
     alldata = Course.objects.all()
-    return render(request, 'all_courses.html', {'mycourses': mycourses, 'alldata': alldata})
+    return redirect('/all_courses/', {'mycourses': mycourses, 'alldata': alldata})
 
 
 def remove_course(request):
@@ -203,14 +201,13 @@ def remove_course(request):
     if course_num in courses:
         courses.remove(course_num)
     courses = json.dumps(courses)
-    print(courses)
+
     user_course.course_nums_json = courses
     user_course.save()
-    print(user_course)
 
     mycourses = Course.objects.none()
     courses = json.loads(courses)
     for coursenum in courses:
         mycourses |= Course.objects.filter(course_number=coursenum)
     alldata = Course.objects.all()
-    return render(request, 'all_courses.html', {'mycourses': mycourses, 'alldata': alldata})
+    return redirect('/all_courses/', {'mycourses': mycourses, 'alldata': alldata})
