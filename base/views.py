@@ -1,15 +1,12 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.files.storage import FileSystemStorage
 from django.core.mail import send_mail
-from django.db.models.query import QuerySet
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 import json
 
 from base.forms import SignUpForm, LogInForm, ContactUSForm, MakeCourseForm
-from base.models import Course, OurUser, UserCourse
+from base.models import Course, UserCourse
 
 # Create your views here.
 from webelopers import settings
@@ -40,7 +37,6 @@ def signup(request):
             usercourse.save()
             if not pass_error and not username_error:
                 user = authenticate(request, username=data.get('username'), password=data.get('password1'))
-                OurUser(user, None).save()
                 login(request, user)
     else:
         form = SignUpForm()
@@ -93,19 +89,6 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    if request.method == "POST":
-        for i in OurUser.objects.all():
-            if i.user == request.user:
-                myUser = i
-        print(request.FILES, myUser.user)
-        if request.method == 'POST' and request.FILES[myUser.image]:
-            myfile = request.FILES[request.POST]
-            fs = FileSystemStorage()
-            filename = fs.save(myfile.name, myfile)
-            uploaded_file_url = fs.url(filename)
-            return render(request, 'profile.html', {
-                'uploaded_file_url': uploaded_file_url
-            })
     return render(request, 'profile.html')
 
 
@@ -127,11 +110,8 @@ def make_new_course_view(request):
 
 def edit_profile_view(request):
     if request.method == 'POST':
-        print(request)
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
-        image = request.POST['image']
-        print(request.POST['image'])
         for i in User.objects.all():
             if i == request.user:
                 if first_name != '':
@@ -140,9 +120,6 @@ def edit_profile_view(request):
                     i.last_name = last_name
                 i.save()
                 break
-        for i in OurUser.objects.all():
-            if i.user == request.user:
-                i.image = image
 
         return render(request, 'profile.html')
     return render(request, 'edit_profile.html')
