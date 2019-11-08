@@ -81,7 +81,7 @@ def contact_us_view(request):
 
 def logout_view(request):
     logout(request)
-    return home_page(request)
+    return redirect('/')
 
 
 @login_required
