@@ -124,5 +124,8 @@ def edit_profile_view(request):
 
 
 def all_courses_view(request):
-    courses = Course.objects.all()
-    return render(request, 'all_courses.html', {'courses': courses})
+    data = None
+    if request.method == "POST":
+        query = request.POST["search_query"]
+        data = Course.objects.filter(department=query)
+    return render(request, 'all_courses.html', {'courses': data})

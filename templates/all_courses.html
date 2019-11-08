@@ -1,5 +1,10 @@
 {% extends 'Base.html' %}
 {% block blocky %}
+<form id="search_form" action="" method="POST">
+    {% csrf_token %}
+    <input name="search_query">
+    <button name="submit" type="submit">search</button>
+</form>
 <div id="all_courses">
     {% for course in courses %}
     <div class="{{course.course_number}}_{{course.group_number}}">
