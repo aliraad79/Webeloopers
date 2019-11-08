@@ -180,7 +180,7 @@ def choose_course_view(request):
         courses.append(course_num)
     courses = json.dumps(courses)
     print(courses)
-    user_course.course_num_json = courses
+    user_course.course_nums_json = courses
     user_course.save()
     print(user_course)
 
@@ -193,4 +193,24 @@ def choose_course_view(request):
 
 
 def remove_course(request):
-    return redirect("/all_courses/")
+    course_num = request.GET.get('num', '')
+    user_course = None
+    for usercourse in UserCourse.objects.all():
+        if usercourse.user_name == request.user.username:
+            user_course = usercourse
+            break
+    courses = json.loads(user_course.course_nums_json)
+    if course_num in courses:
+        courses.remove(course_num)
+    courses = json.dumps(courses)
+    print(courses)
+    user_course.course_nums_json = courses
+    user_course.save()
+    print(user_course)
+
+    mycourses = Course.objects.none()
+    courses = json.loads(courses)
+    for coursenum in courses:
+        mycourses |= Course.objects.filter(course_number=coursenum)
+    alldata = Course.objects.all()
+    return render(request, 'all_courses.html', {'mycourses': mycourses, 'alldata': alldata})
