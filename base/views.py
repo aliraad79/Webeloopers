@@ -109,14 +109,16 @@ def edit_profile_view(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
+        user = ''
         for i in User.objects.all():
             if i == request.user:
-                i.first_name = first_name
-                i.last_name = last_name
+                user = i
+                break
         if first_name != '':
-            request.user.first_name = first_name
+            user.first_name = first_name
         if last_name != '':
-            request.user.last_name = last_name
+            user.last_name = last_name
+        user.save()
         return profile_view(request)
     return render(request, 'edit_profile.html')
 
