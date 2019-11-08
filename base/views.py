@@ -119,7 +119,7 @@ def edit_profile_view(request):
         if last_name != '':
             user.last_name = last_name
         user.save()
-        return profile_view(request)
+        return render(request, 'profile.html')
     return render(request, 'edit_profile.html')
 
 
