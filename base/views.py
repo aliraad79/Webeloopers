@@ -149,8 +149,8 @@ def all_courses_view(request):
             if course:
                 data3 = Course.objects.filter(name=query)
             data = (data1 | data2 | data3).distinct()
-        if not data:
-            data = Course.objects.all()
+    if not data:
+        data = Course.objects.all()
     return render(request, 'all_courses.html', {'courses': data})
 
 

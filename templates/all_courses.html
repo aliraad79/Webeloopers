@@ -13,4 +13,13 @@
     <br>
     {% endfor %}
 </div>
+<form id="search_form" action="" method="POST">
+    {% csrf_token %}
+    <input name="search_query">
+    <input name="department" type="checkbox" value="department">
+    <input name="teacher" type="checkbox" value="teacher">
+    <input name="course" type="checkbox" value="course">
+    <button name="submit" type="submit">search</button>
+    <a class="add" href="/choose_course/?num={{course.course_number}}">add</a>
+</form>
 {% endblock %}
