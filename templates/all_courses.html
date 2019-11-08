@@ -14,6 +14,20 @@
         <div>{{course.get_first_day_display}} {{course.get_second_day_display}}</div>
         <div>{{course.start_time|date:'H:i'}} {{course.end_time|date:'H:i'}}</div>
         <div>{{course.teacher}}</div>
+        <a class="add" href="">add</a>
+    </div>
+    <br>
+    {% endfor %}
+</div>
+<div id="my_courses">
+{% for course in courses %}
+    <div class="{{course.course_number}}_{{course.group_number}}">
+        <h4>{{course.name}}</h4>
+        <div>{{course.department}}</div>
+        <div>{{course.get_first_day_display}} {{course.get_second_day_display}}</div>
+        <div>{{course.start_time|date:'H:i'}} {{course.end_time|date:'H:i'}}</div>
+        <div>{{course.teacher}}</div>
+        <a class="add" href="">add</a>
     </div>
     <br>
     {% endfor %}

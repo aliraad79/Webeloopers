@@ -150,3 +150,7 @@ def all_courses_view(request):
         #         data3 = Course.objects.filter(name=query)
         #     data = (data1 | data2 | data3).distinct()
     return render(request, 'all_courses.html', {'courses': data})
+
+
+def choose_course_view(request):
+    pass
