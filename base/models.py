@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django import forms
 
@@ -14,3 +15,7 @@ class Course(models.Model):
     CHOICES = (('0', 'saturday'), ('1', 'sunday'), ('2', 'monday'), ('3', 'tuesday'), ('4', 'wednesday'))
     first_day = models.CharField(choices=CHOICES, max_length=30)
     second_day = models.CharField(choices=CHOICES, max_length=30, blank=True)
+
+
+class OurUser(User):
+    image = models.FileField()
