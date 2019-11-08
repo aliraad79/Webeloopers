@@ -1,6 +1,7 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from django.db.models.query import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
@@ -136,14 +137,14 @@ def all_courses_view(request):
         if not depart and not course and not teacher:
             data = Course.objects.filter(department=query)
         else:
-            data1 = []
-            data2 = []
-            data3 = []
+            data1 = Course.objects.none()
+            data2 = Course.objects.none()
+            data3 = Course.objects.none()
             if depart:
                 data1 = Course.objects.filter(department=query)
             if teacher:
                 data2 = Course.objects.filter(teacher=query)
             if course:
-                data3 = Course.objects.filter(course=course)
-
+                data3 = Course.objects.filter(name=query)
+            data = (data1 | data2 | data3).distinct()
     return render(request, 'all_courses.html', {'courses': data})
