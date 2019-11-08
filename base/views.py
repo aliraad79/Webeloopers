@@ -1,12 +1,11 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from base.forms import SignUpForm, LogInForm, ContactUSForm, MakeCourseForm
-from base.models import Course
+from base.models import Course, OurUser
 
 # Create your views here.
 from webelopers import settings
@@ -22,7 +21,7 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         try:
-            for i in User.objects.all():
+            for i in OurUser.objects.all():
                 if i.username == request.POST['username']:
                     username_error = True
             if request.POST['password1'] != request.POST['password2']:
@@ -109,8 +108,9 @@ def edit_profile_view(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
+        image = request.POST['image']
         user = ''
-        for i in User.objects.all():
+        for i in OurUser.objects.all():
             if i == request.user:
                 user = i
                 break
@@ -118,6 +118,9 @@ def edit_profile_view(request):
             user.first_name = first_name
         if last_name != '':
             user.last_name = last_name
+        if image:
+            user.image = image
+
         user.save()
         return render(request, 'profile.html')
     return render(request, 'edit_profile.html')
