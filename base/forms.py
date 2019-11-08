@@ -46,6 +46,10 @@ class EditProfileForm(forms.Form):
 
 
 class MakeCourseForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["start_time"].input_formats = ["%H:%M"]
+        self.fields["end_time"].input_formats = ["%H:%M"]
 
     class Meta:
         model = Course

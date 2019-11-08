@@ -97,7 +97,6 @@ def panel_view(request):
 def make_new_course_view(request):
     if request.method == 'POST':
         form = MakeCourseForm(request.POST)
-        print(form.errors.as_data())
         if form.is_valid():
             form.save()
     else:
