@@ -67,8 +67,8 @@ def contact_us_view(request):
         if form.is_valid():
             data = form.cleaned_data
             send_mail(
-                str(data.get('title')) + str('\n') + str(data.get('email')),
-                data.get('text'),
+                str(data.get('title')),
+                data.get('text') + str('\n') + str(data.get('email')),
                 settings.EMAIL_HOST_USER,
                 ['webe19lopers@gmail.com'],
                 fail_silently=False,
