@@ -156,3 +156,7 @@ def all_courses_view(request):
 def choose_course_view(request):
     print(request.GET.get('num', ''))
     return redirect("/all_courses/")
+
+
+def remove_course(request):
+    return redirect("/all_courses/")
