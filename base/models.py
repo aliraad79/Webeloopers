@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import User
 from django.db import models
 from django import forms
 
@@ -25,3 +25,9 @@ class OurUser(models.Model):
         super(OurUser, self).__init__()
         self.user = user
         self.image = image
+
+
+class UserCourse(models.Model):
+    user_name = models.CharField(max_length=30)
+    course_nums_json = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='image/')
