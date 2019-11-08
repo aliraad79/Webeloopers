@@ -3,11 +3,15 @@
 
 <form id="search_form" action="" method="POST">
     {% csrf_token %}
-    <input name="search_query" placeholder="search">
+    <input name="search_query">
+    <input name="department" type="checkbox" value="department">
+    <input name="teacher" type="checkbox" value="teacher">
+    <input name="course" type="checkbox" value="course">
     <button name="submit" type="submit">search</button>
 </form>
 <br>
 <div id="search_result">
+    search_Result
     {% for course in courses %}
     <div class="{{course.course_number}}_{{course.group_number}}">
         <h4>{{course.name}}</h4>
@@ -15,6 +19,8 @@
         <div>{{course.get_first_day_display}} {{course.get_second_day_display}}</div>
         <div>{{course.start_time|date:'H:i'}} {{course.end_time|date:'H:i'}}</div>
         <div>{{course.teacher}}</div>
+        <a class="add" href="/choose_course/?num={{ course.course_number }}">add</a>
+        <a class="remove" href="/remove_course/?num={{ course.course_number }}">remove</a>
     </div>
     <br>
     {% endfor %}
@@ -23,15 +29,34 @@
 <div id="all_courses">
     all courses
     {% for course in alldata %}
+    {% if course in mycourses %}
+    {% else %}
     <div class="{{course.course_number}}_{{course.group_number}}">
         <h4>{{course.name}}</h4>
         <div>{{course.department}}</div>
         <div>{{course.get_first_day_display}} {{course.get_second_day_display}}</div>
         <div>{{course.start_time|date:'H:i'}} {{course.end_time|date:'H:i'}}</div>
         <div>{{course.teacher}}</div>
+        <a class="add" href="/choose_course/?num={{ course.course_number }}">add</a>
+        <a class="remove" href="/remove_course/?num={{ course.course_number }}">remove</a>
+    </div>
+    <br>
+    {% endif %}
+    {% endfor %}
+</div>
+<div id="my_courses">
+    my courses
+    {% for course in mycourses %}
+    <div class="{{course.course_number}}_{{course.group_number}}">
+        <h4>{{course.name}}</h4>
+        <div>{{course.department}}</div>
+        <div>{{course.get_first_day_display}} {{course.get_second_day_display}}</div>
+        <div>{{course.start_time|date:'H:i'}} {{course.end_time|date:'H:i'}}</div>
+        <div>{{course.teacher}}</div>
+        <a class="add" href="/choose_course/?num={{ course.course_number }}">add</a>
+        <a class="remove" href="/remove_course/?num={{ course.course_number }}">remove</a>
     </div>
     <br>
     {% endfor %}
 </div>
-
 {% endblock %}

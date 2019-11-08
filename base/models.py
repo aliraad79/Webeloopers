@@ -17,5 +17,11 @@ class Course(models.Model):
     second_day = models.CharField(choices=CHOICES, max_length=30, blank=True)
 
 
+class UserCourse(models.Model):
+    user_name = models.CharField(max_length=30)
+    course_nums_json = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='image/')
+
+
 class OurUser(User):
     image = models.FileField()

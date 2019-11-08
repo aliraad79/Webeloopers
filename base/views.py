@@ -4,9 +4,10 @@ from django.core.mail import send_mail
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+import json
 
 from base.forms import SignUpForm, LogInForm, ContactUSForm, MakeCourseForm
-from base.models import Course, OurUser
+from base.models import Course, OurUser, UserCourse
 
 # Create your views here.
 from webelopers import settings
@@ -32,6 +33,8 @@ def signup(request):
         if form.is_valid():
             data = form.cleaned_data
             form.save()
+            usercourse = UserCourse(user_name=request.POST['username'], course_nums_json=json.dumps([]))
+            usercourse.save()
             if not pass_error and not username_error:
                 user = authenticate(username=data.get('username'), password=data.get('password1'))
                 login(request, user)
@@ -150,12 +153,48 @@ def all_courses_view(request):
                 data3 = Course.objects.filter(name=query)
             data = (data1 | data2 | data3).distinct()
     alldata = Course.objects.all()
-    return render(request, 'all_courses.html', {'courses': data, 'alldata': alldata})
+    usecourses = getusercourses(request.user.username)
+    return render(request, 'all_courses.html', {'courses': data, 'alldata': alldata, 'mycourses': usecourses})
+
+
+def getusercourses(username):
+    user = None
+    for usercourse in UserCourse.objects.all():
+        if usercourse.user_name == username:
+            user = usercourse
+    courses = json.loads(user.course_nums_json)
+    mycourses = Course.objects.none()
+    for coursenum in courses:
+        mycourses |= Course.objects.filter(course_number=coursenum)
+    return mycourses
+
+
+def getAllCourse():
+    return Course.objects.all()
 
 
 def choose_course_view(request):
-    print(request.GET.get('num', ''))
-    return redirect("/all_courses/")
+    course_num = request.GET.get('num', '')
+    user_course = None
+    for usercourse in UserCourse.objects.all():
+        if usercourse.user_name == request.user.username:
+            user_course = usercourse
+            break
+    courses = json.loads(user_course.course_nums_json)
+    if course_num not in courses:
+        courses.append(course_num)
+    courses = json.dumps(courses)
+    print(courses)
+    user_course.course_num_json = courses
+    user_course.save()
+    print(user_course)
+
+    mycourses = Course.objects.none()
+    courses = json.loads(courses)
+    for coursenum in courses:
+        mycourses |= Course.objects.filter(course_number=coursenum)
+    alldata = Course.objects.all()
+    return render(request, 'all_courses.html', {'mycourses': mycourses, 'alldata': alldata})
 
 
 def remove_course(request):
