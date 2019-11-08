@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.db import models
 from django import forms
 
@@ -17,5 +17,11 @@ class Course(models.Model):
     second_day = models.CharField(choices=CHOICES, max_length=30, blank=True)
 
 
-class OurUser(User):
-    image = models.FileField()
+class OurUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(blank=True, upload_to='images/')
+
+    def __init__(self, user, image=None):
+        super(OurUser, self).__init__()
+        self.user = user
+        self.image = image
